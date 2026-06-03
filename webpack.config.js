@@ -11,7 +11,12 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].js",
+    filename: (pathData) => {
+      if (pathData.chunk && (pathData.chunk.name === "popup" || pathData.chunk.name === "sidebar")) {
+        return `${pathData.chunk.name}/${pathData.chunk.name}.js`;
+      }
+      return "[name].js";
+    },
     clean: true,
   },
   module: {
